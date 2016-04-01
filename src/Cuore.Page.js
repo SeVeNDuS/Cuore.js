@@ -1,10 +1,15 @@
 CUORE.Page = CUORE.Class(null, {
 
     init: function() {
+        this.setHandlerSet(new CUORE.HandlerSet());
         this.components = new CUORE.Registry();
         this.services = new CUORE.Directory();
         this.state = new CUORE.State();
         this.setUp();
+    },
+
+    setHandlerSet: function(handlerSet) {
+        this.handlerSet = handlerSet;
     },
 
     setUp: function() {
@@ -57,5 +62,19 @@ CUORE.Page = CUORE.Class(null, {
 
     setDirectory: function(directory) {
         this.services = directory;
+    },
+
+    addHandler: function(eventName, handler) {
+        handler.setOwner(this);
+        this.handlerSet.register(eventName, handler);
+        CUORE.Bus.subscribe(this, eventName);
+    },
+
+    addExecHandler: function(eventName, handler) {
+        this.addHandler(eventName, new CUORE.Handlers.Executor(handler));
+    },
+
+    eventDispatch: function(eventName, params) {
+        this.handlerSet.notifyHandlers(eventName, params);
     }
 });

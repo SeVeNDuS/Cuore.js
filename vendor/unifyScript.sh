@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ./src
+cd ../src
 rm -f cuore.unified.js
 
 UNIFIED=cuore.unified.js
