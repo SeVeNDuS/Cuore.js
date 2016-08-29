@@ -18,7 +18,7 @@ CUORE.Core = (function(undefined) {
                     isStatusOK = (request.status === 200 || request.status === 304);
                 }
 
-                if (isReadyStateOK && isStatusOK) {
+                if (isReadyStateOK) {
                     try {
                         parsedResponse = request.responseText;
                         var isString = (typeof request.responseText === 'string');
